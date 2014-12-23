@@ -181,10 +181,11 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, PrefsActivity.class));
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     public void newYear(View view) {

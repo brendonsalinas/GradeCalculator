@@ -3,7 +3,8 @@ package com.lazyengineers.gradecalculator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +19,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
+    // TODO: implement database
     int i = 0;
     TextView newSchoolYear1, newSchoolYear2, newSchoolYear3, newSchoolYear4,newSchoolYear5,
             newSchoolYear6, newSchoolYear7, newSchoolYear8, newSchoolYear9, newSchoolYear10;

@@ -1,7 +1,8 @@
 package com.lazyengineers.gradecalculator;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
-public class NewYear extends ActionBarActivity {
+public class NewYear extends Activity {
 
 
     @Override

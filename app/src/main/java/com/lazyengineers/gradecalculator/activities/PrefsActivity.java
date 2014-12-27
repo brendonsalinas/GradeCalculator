@@ -1,4 +1,4 @@
-package com.lazyengineers.gradecalculator;
+package com.lazyengineers.gradecalculator.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
+
+import com.lazyengineers.gradecalculator.R;
 
 import java.util.List;
 

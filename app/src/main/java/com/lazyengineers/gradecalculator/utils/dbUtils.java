@@ -26,7 +26,7 @@ public class dbUtils {
 */
 
     /* Save/Write methods */
-    public static void write(ArrayList<yearStorage> data, String fileName, Context context) {
+    public static void save(ArrayList<yearStorage> data, String fileName, Context context) {
         try {
             FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
@@ -51,8 +51,6 @@ public class dbUtils {
             instance = new ArrayList<yearStorage>();
             // test cases
             // in the future, the quarters should be chosen from spinners
-            instance.add(new yearStorage("Spring","2013"));
-            instance.add(new yearStorage("Fall","2014"));
         }
         return instance;
     }

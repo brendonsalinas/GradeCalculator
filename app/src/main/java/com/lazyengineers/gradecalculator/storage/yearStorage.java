@@ -10,19 +10,18 @@ import java.io.Serializable;
  * Created by jianc on 12/23/14.
  */
 public class yearStorage implements Serializable {
-    private String quarter, year;
+    private String label;
     private List<courseStorage> courses;
 
     public yearStorage() {
         // this should never be called.
         courses = new ArrayList<courseStorage>();
-        quarter = year = "";
+        label = "Default";
     }
 
-    public yearStorage(String q, String y) {
+    public yearStorage(String lbl) {
         courses = new ArrayList<courseStorage>();
-        quarter = q;
-        year = y;
+        label=lbl;
     }
 
     // deep copy, don't know when we'll need this.. yet...
@@ -37,9 +36,8 @@ public class yearStorage implements Serializable {
     }
 */
 
-    public void modify(String q, String y) {
-        quarter = q;
-        year = y;
+    public void setLabel(String lbl) {
+        label = lbl;
     }
 
     public void addCourse() {
@@ -55,11 +53,7 @@ public class yearStorage implements Serializable {
         courses.remove(index);
     }
 
-    public String getQuarter() {
-        return quarter;
-    }
-
-    public String getYear() {
-        return year;
+    public String getLabel() {
+        return label;
     }
 }

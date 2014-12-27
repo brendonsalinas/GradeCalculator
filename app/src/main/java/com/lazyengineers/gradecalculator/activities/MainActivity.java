@@ -12,9 +12,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.text.InputType;
 import java.util.List;
 import java.util.ArrayList;
 import android.view.LayoutInflater;
+import android.text.TextWatcher;
+import android.text.TextUtils;
+import android.text.Editable;
+
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,19 +61,6 @@ public class MainActivity extends Activity {
 
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        // TODO: this should be a popup menu
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final yearStorage item = (yearStorage) parent.getItemAtPosition(position);
-                yearsList.remove(item);
-                adapter.notifyDataSetChanged();
-                view.setAlpha(1);
-            }
-        });
-
     }
 
     private class yearsArrayAdapter extends ArrayAdapter<yearStorage> {
@@ -90,17 +84,27 @@ public class MainActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            // make position accessible for inner classes
+            final int pos = position;
             yearStorage year = getItem(position);
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.years_layout, parent, false);
             }
             // Lookup view for data population
-            TextView quartertv  = (TextView) convertView.findViewById(R.id.quarter);
-            TextView yeartv = (TextView) convertView.findViewById(R.id.year);
-            // Populate the data into the template view using the data object
-            quartertv.setText(year.getQuarter());
-            yeartv.setText(year.getYear());
+            TextView yearLabel  = (TextView) convertView.findViewById(R.id.year_label);
+            yearLabel.setText(year.getLabel());
+            yearLabel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemPressDialog(pos, view);
+                    // should spawn submenu?
+                }
+            });
+
+            //image button click should trigger new activity, and pass on json bundle of current object
+            //after it is finished, it will return the modified bundle and we will set the current index to it.
+
             // Return the completed view to render on screen
             return convertView;
         }
@@ -129,8 +133,14 @@ public class MainActivity extends Activity {
                 confirmationDialog();
                 return true;
             case R.id.action_refresh:
-                System.out.println("Refresh case clicked!");
                 adapter.notifyDataSetChanged();
+                return true;
+            case R.id.action_add_icon:
+                setYearLabelDialog(0, true);
+                return true;
+            case R.id.action_add_text:
+                // same as action_add_icon.
+                setYearLabelDialog(0, true);
                 return true;
             default:
                 System.out.println("Default case reached.");
@@ -138,11 +148,123 @@ public class MainActivity extends Activity {
         return false;
     }
 
-    private void confirmationAction(boolean yes) {
-        if (yes) {
-            yearsList = new ArrayList<yearStorage>();
-            adapter.notifyDataSetChanged();
-        }
+    private void removeYear(int position, View view) {
+        yearsList.remove(position);
+        view.setAlpha(1);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setYearLabel(int position, String str) {
+        yearsList.get(position).setLabel(str);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addYear(String str) {
+        yearsList.add(new yearStorage(str));
+        adapter.notifyDataSetChanged();
+    }
+
+    private void clearEntries() {
+        yearsList = new ArrayList<yearStorage>();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setYearLabelDialog(int pos, boolean mode) {
+        final boolean append = mode;
+        final int parentPos = pos;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter a Label");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Ex: Fall 2014");
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = input.getText().toString();
+                if (append)
+                    addYear(text);
+                else
+                    setYearLabel(parentPos, text);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setEnabled(false);
+
+        // Now set the textchange listener for edittext
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Check if edittext is empty
+                if (TextUtils.isEmpty(s)) {
+                    // Disable ok button
+                    ((AlertDialog) dialog).getButton(
+                            AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                } else {
+                    // Something into edit text. Enable the button.
+                    ((AlertDialog) dialog).getButton(
+                            AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                }
+
+            }
+        });
+    }
+
+    // todo: generic dialog builder
+    private void onItemPressDialog(int pos, View view) {
+        final View parentView = view;
+        final int parentPos = pos;
+        AlertDialog.Builder chooser = new AlertDialog.Builder(this);
+
+        chooser.setTitle("Choose an Action");
+
+        // set dialog message
+        chooser
+            .setCancelable(true)
+            .setItems(R.array.years_item_press_array, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int position) {
+                    // position = index of item clicked
+                    if (position == 0) {
+                        setYearLabelDialog(parentPos,false);
+                    } else if (position == 1) {
+                        removeYear(parentPos, parentView);
+                    }
+                    dialog.dismiss();
+                }
+            });
+
+        // create alert dialog
+        AlertDialog dialog = chooser.create();
+        dialog.setCanceledOnTouchOutside(true);
+
+        // show it
+        dialog.show();
     }
 
     private void confirmationDialog() {
@@ -158,8 +280,8 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         // if this button is clicked, delete list
-                        confirmationAction(true);
-                        dialog.cancel();
+                        clearEntries();
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
@@ -189,18 +311,14 @@ public class MainActivity extends Activity {
       activity we are in.
       */
 
+    protected void onResume() {
+        yearsList = dbUtils.read(fileName, this);
+        super.onResume();
+    }
+
     @Override
     protected void onPause() {
-        // save instance data
-        if (yearsList.size() == 0) {
-            // reload data on close for testing.
-            yearsList.add(new yearStorage("Summer","2013"));
-            yearsList.add(new yearStorage("Fall","2014"));
-            yearsList.add(new yearStorage("Spring","2014"));
-            yearsList.add(new yearStorage("Winter","2010"));
-        }
-
-        dbUtils.write(yearsList, fileName, this);
+        dbUtils.save(yearsList, fileName, this);
         super.onPause();
     }
 }

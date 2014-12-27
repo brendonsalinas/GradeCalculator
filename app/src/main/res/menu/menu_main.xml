@@ -7,15 +7,27 @@
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:showAsAction="never" />
     <item
-        android:id="@+id/action_clear"
-        android:title="@string/action_clear"
+        android:id="@+id/action_add_icon"
+        android:title="@string/action_add_year"
+        android:icon="@drawable/ic_action_add"
         android:orderInCategory="0"
-        app:showAsAction="never" />
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/action_add_text"
+        android:title="@string/action_add_year"
+        android:orderInCategory="1"
+        android:showAsAction="never"/>
     <item
         android:id="@+id/action_refresh"
         android:title="@string/action_refresh"
-        android:orderInCategory="1"
-        app:showAsAction="never"/>
+        android:orderInCategory="2"
+        android:showAsAction="never"/>
+    <item
+        android:id="@+id/action_clear"
+        android:title="@string/action_clear"
+        android:orderInCategory="3"
+        android:showAsAction="never" />
+
 </menu>

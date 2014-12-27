@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dip"
     android:orientation="horizontal"
     android:weightSum="10">
     <TextView
-        android:id="@+id/quarter"
+        android:id="@+id/year_label"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:text="Quarter"
-        android:layout_weight="5"/>
-    <TextView
-        android:id="@+id/year"
+        android:textSize="28sp"
+        android:gravity="center"/>
+
+    <ImageButton
+        android:layout_height="60dip"
+        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Year"
-        android:layout_weight="5"/>
-</LinearLayout>
+        android:src="@drawable/ic_enter_courses"
+        android:onClick="enter_courses"
+        android:gravity="center"
+        android:background="@android:color/transparent" />
+</RelativeLayout>

@@ -15,18 +15,12 @@
     <!-- Actionbar text for Course activity -->
     <string name="action_add_course">Add Course</string>
 
-    <string-array name="quarter_array">
-        <item>Fall</item>
-        <item>Winter</item>
-        <item>Spring</item>
-        <item>Summer</item>
-    </string-array>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_cancel">Cancel</string>
 
-    <string-array name="years_item_press_array">
+    <string-array name="item_press_array">
         <item>Rename</item>
         <item>Delete</item>
     </string-array>
-
-    <string name="year_label_help">Example: Fall 2013</string>
 
 </resources>

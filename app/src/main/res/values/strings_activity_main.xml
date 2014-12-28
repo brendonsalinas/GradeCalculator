@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="year_label_title">Enter a Label</string>
+    <string name="year_label_hint">Ex: Fall 2014</string>
+    <string name="year_btn_set">Set</string>
+    <string name="year_btn_cancel">Cancel</string>
+    <string name="year_menu_title">Choose an Action</string>
+
+    <string name="year_confirmation_title">Delete All Data?</string>
+    <string name="year_confirmation_msg">This action will delete all saved years, courses, and grades.</string>
+</resources>

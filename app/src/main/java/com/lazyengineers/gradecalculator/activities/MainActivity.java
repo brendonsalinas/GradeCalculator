@@ -1,34 +1,30 @@
 package com.lazyengineers.gradecalculator.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.text.InputType;
-import java.util.List;
-import java.util.ArrayList;
-import android.view.LayoutInflater;
-import android.text.TextWatcher;
-import android.text.TextUtils;
-import android.text.Editable;
-
-
-import android.view.Menu;
-import android.view.MenuItem;
-import com.lazyengineers.gradecalculator.storage.*;
-import com.lazyengineers.gradecalculator.utils.*;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.lazyengineers.gradecalculator.R;
+import com.lazyengineers.gradecalculator.storage.yearStorage;
+import com.lazyengineers.gradecalculator.utils.dbUtils;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     // filename

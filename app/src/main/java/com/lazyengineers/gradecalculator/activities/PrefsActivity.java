@@ -1,24 +1,13 @@
 package com.lazyengineers.gradecalculator.activities;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-
+import android.view.MenuItem;
 
 import com.lazyengineers.gradecalculator.R;
-
-import java.util.List;
 
 public class PrefsActivity extends PreferenceActivity {
 

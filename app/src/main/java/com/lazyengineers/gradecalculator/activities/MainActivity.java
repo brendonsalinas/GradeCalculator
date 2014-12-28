@@ -30,11 +30,6 @@ import com.lazyengineers.gradecalculator.utils.*;
 
 import com.lazyengineers.gradecalculator.R;
 
-/*
-    This should display all the years in a listview
- */
-
-// default is listActivity
 public class MainActivity extends Activity {
     // filename
     final static private String fileName = "yearList.store";
@@ -298,18 +293,6 @@ public class MainActivity extends Activity {
         // show it
         alertDialog.show();
     }
-
-    // database implementation here
-    /*
-     should have Year and Course Activity to handle the UI.  We should initially populate the Years
-      and Courses by reading the database and generating a listview.
-
-      Initially, here, we call year activity and display them through databases
-      how will we handle shuffling the years around?  have saved indexes?  don't worry about that yet
-
-      Then, under year, it will display the classes.  Action bar should change text depending on which
-      activity we are in.
-      */
 
     protected void onResume() {
         yearsList = dbUtils.read(fileName, this);

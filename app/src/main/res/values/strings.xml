@@ -29,13 +29,4 @@
 
     <string name="year_label_help">Example: Fall 2013</string>
 
-    <string name="title_activity_new_year">NewYear</string>
-    <string name="finished">Done!</string>
-    <string name="title_activity_year1">year1</string>
-    <string name="add_new_class">New Class</string>
-    <string name="title_activity_new_class">NewClass</string>
-    <string name="title_activity_year">YearActivity</string>
-    <string name="title_activity_course">CourseActivity</string>
-    <string name="title_activity_confirmation">ConfirmationActivity</string>
-
 </resources>

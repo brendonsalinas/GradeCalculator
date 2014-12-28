@@ -11,19 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jianc on 12/26/14.
- */
 public class dbUtils {
-/*
-    public static ArrayList<yearStorage> cloneList(ArrayList<yearStorage> toCopy) {
-        ArrayList<yearStorage> newList = new ArrayList<yearStorage>();
-        for (ArrayList<yearStorage> item: toCopy) {
-            newList.add(item.clone());
-        }
-        return newList;
-    }
-*/
 
     /* Save/Write methods */
     public static void save(ArrayList<yearStorage> data, String fileName, Context context) {
@@ -38,19 +26,14 @@ public class dbUtils {
     }
 
     public static ArrayList<yearStorage> read(String fileName, Context context) {
-        // TODO: Add error checking
         ArrayList<yearStorage> instance;
         try {
             FileInputStream fis = context.openFileInput(fileName);
             ObjectInputStream is = new ObjectInputStream(fis);
             instance = (ArrayList<yearStorage>) is.readObject();
             is.close();
-            // need to catch individual exception
-            // for now: if doesn't exist, then return new empty list.
         } catch (Exception e) {
             instance = new ArrayList<yearStorage>();
-            // test cases
-            // in the future, the quarters should be chosen from spinners
         }
         return instance;
     }

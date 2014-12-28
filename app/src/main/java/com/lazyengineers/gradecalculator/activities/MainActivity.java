@@ -197,6 +197,7 @@ public class MainActivity extends Activity {
         });
 
         final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
         ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)

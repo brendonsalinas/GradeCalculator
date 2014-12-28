@@ -2,18 +2,27 @@ package com.lazyengineers.gradecalculator.storage;
 
 public class courseStorage {
     private int units;
-    private String grade, name;
+    private String grade, label;
 
-    public courseStorage() {
-        // this should never be called
-        units = 0;
-        grade = "";
-        name = "";
+    public courseStorage(String l, int u, String g) {
+        setInfo(l, u, g);
     }
 
-    public void setInfo(String n, int u, String g) {
+    public void setInfo(String l, int u, String g) {
         units = u;
         grade = g;
-        name = n;
+        label = l;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

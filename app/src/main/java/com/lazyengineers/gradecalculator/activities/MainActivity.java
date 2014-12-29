@@ -1,34 +1,30 @@
 package com.lazyengineers.gradecalculator.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.text.InputType;
-import java.util.List;
-import java.util.ArrayList;
-import android.view.LayoutInflater;
-import android.text.TextWatcher;
-import android.text.TextUtils;
-import android.text.Editable;
-
-
-import android.view.Menu;
-import android.view.MenuItem;
-import com.lazyengineers.gradecalculator.storage.*;
-import com.lazyengineers.gradecalculator.utils.*;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.lazyengineers.gradecalculator.R;
+import com.lazyengineers.gradecalculator.storage.yearStorage;
+import com.lazyengineers.gradecalculator.utils.dbUtils;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     // filename
@@ -168,17 +164,17 @@ public class MainActivity extends Activity {
         final boolean append = mode;
         final int parentPos = pos;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter a Label");
+        builder.setTitle(R.string.year_label_title);
 
         // Set up the input
         final EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setHint("Ex: Fall 2014");
+        input.setHint(R.string.year_label_hint);
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.year_btn_set, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String text = input.getText().toString();
@@ -189,7 +185,7 @@ public class MainActivity extends Activity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.year_btn_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -238,12 +234,12 @@ public class MainActivity extends Activity {
         final int parentPos = pos;
         AlertDialog.Builder chooser = new AlertDialog.Builder(this);
 
-        chooser.setTitle("Choose an Action");
+        chooser.setTitle(R.string.year_menu_title);
 
         // set dialog message
         chooser
             .setCancelable(true)
-            .setItems(R.array.years_item_press_array, new DialogInterface.OnClickListener() {
+            .setItems(R.array.item_press_array, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int position) {
                     // position = index of item clicked
                     if (position == 0) {
@@ -267,20 +263,20 @@ public class MainActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title
-        alertDialogBuilder.setTitle("Delete All Data?");
+        alertDialogBuilder.setTitle(R.string.year_confirmation_title);
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("This action will delete all saved years, courses, and grades.")
+                .setMessage(R.string.year_confirmation_msg)
                 .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.btn_yes,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         // if this button is clicked, delete list
                         clearEntries();
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.btn_cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing

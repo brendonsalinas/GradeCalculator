@@ -1,18 +1,11 @@
 package com.lazyengineers.gradecalculator.storage;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class yearStorage implements Serializable {
     private String label;
-    private List<courseStorage> courses;
-
-    public yearStorage() {
-        // this should never be called.
-        courses = new ArrayList<courseStorage>();
-        label = "Default";
-    }
+    private ArrayList<courseStorage> courses;
 
     public yearStorage(String lbl) {
         courses = new ArrayList<courseStorage>();
@@ -23,20 +16,11 @@ public class yearStorage implements Serializable {
         label = lbl;
     }
 
-    public void addCourse() {
-        courses.add(new courseStorage());
-    }
-
-    public void modifyCourse(int index, String name, int units, String grade) {
-        courses.get(index).setInfo(name,units,grade);
-    }
-
-    public void delCourse(int index) {
-        // if we ever implement drag and drop, we should delete by object.. idk about this...
-        courses.remove(index);
-    }
-
     public String getLabel() {
         return label;
+    }
+
+    public ArrayList<courseStorage> getCourseList() {
+        return courses;
     }
 }

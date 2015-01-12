@@ -27,9 +27,6 @@ import com.lazyengineers.gradecalculator.utils.dbUtils;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    // filename
-    final static private String fileName = "yearList.store";
-
     // instance
     private ArrayList<yearStorage> yearsList;
 
@@ -45,7 +42,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // load data
-        yearsList = dbUtils.read(fileName, this);
+        yearsList = dbUtils.read(this);
 
         // create listview
         adapter = new yearsArrayAdapter(this, yearsList);
@@ -292,13 +289,13 @@ public class MainActivity extends Activity {
     }
 
     protected void onResume() {
-        yearsList = dbUtils.read(fileName, this);
+        yearsList = dbUtils.read(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        dbUtils.save(yearsList, fileName, this);
+        dbUtils.save(yearsList, this);
         super.onPause();
     }
 }

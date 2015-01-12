@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class yearStorage implements Serializable {
     private String label;
-    private ArrayList<courseStorage> courses;
+    public ArrayList<courseStorage> courses;
 
     public yearStorage(String lbl) {
         courses = new ArrayList<courseStorage>();

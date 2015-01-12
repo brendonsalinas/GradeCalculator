@@ -3,6 +3,9 @@
 
     <string name="app_name">Grade Calculator</string>
 
+    <!-- for housekeeping purposes -->
+    <string name="title_activity_course">Course Activity</string>
+
     <!-- Shared actionbar text between Main & Sub Activities -->
     <string name="action_settings">Settings</string>
     <string name="action_clear">Clear All</string>

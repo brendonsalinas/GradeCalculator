@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,7 +55,7 @@ public class MainActivity extends Activity {
     private class yearsArrayAdapter extends ArrayAdapter<yearStorage> {
 
         public yearsArrayAdapter(Context context, ArrayList<yearStorage> years) {
-            super(context, 0, years); // figure out what this does...
+            super(context, 0, years);
         }
 
         @Override
@@ -86,7 +87,19 @@ public class MainActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     onItemPressDialog(pos, view);
-                    // should spawn submenu?
+                }
+            });
+
+            ImageButton courseButton = (ImageButton) convertView.findViewById(R.id.course_button);
+            courseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: stub
+                    // put position in intent extras
+                    // spawn new activity)
+                    Intent courseIntent = new Intent(MainActivity.this, CourseActivity.class);
+                    courseIntent.putExtra("pos",pos);
+                    MainActivity.this.startActivity(courseIntent);
                 }
             });
 

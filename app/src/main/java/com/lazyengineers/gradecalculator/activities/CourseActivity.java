@@ -110,9 +110,6 @@ public class CourseActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, PrefsActivity.class));
-                return true;
             case R.id.action_clear:
                 confirmationDialog();
                 return true;

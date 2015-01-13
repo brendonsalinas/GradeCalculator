@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="course_label_title">Enter a Label</string>
+    <string name="course_label_hint">Ex: Writing 39C</string>
+
+    <string name="course_confirmation_title">Delete Courses?</string>
+    <string name="course_confirmation_msg">This will delete all saved courses for current year.</string>
+</resources>

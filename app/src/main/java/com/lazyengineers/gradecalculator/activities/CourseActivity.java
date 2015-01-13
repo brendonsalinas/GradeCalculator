@@ -132,11 +132,11 @@ public class CourseActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title
-        alertDialogBuilder.setTitle(R.string.year_confirmation_title);
+        alertDialogBuilder.setTitle(R.string.course_confirmation_title);
 
         // set dialog message
         alertDialogBuilder
-                .setMessage(R.string.year_confirmation_msg)
+                .setMessage(R.string.course_confirmation_msg)
                 .setCancelable(false)
                 .setPositiveButton(R.string.btn_yes,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {

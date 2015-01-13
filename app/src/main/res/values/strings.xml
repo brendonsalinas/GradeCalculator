@@ -18,7 +18,9 @@
     <!-- Actionbar text for Course activity -->
     <string name="action_add_course">Add Course</string>
 
+    <!-- Button strings -->
     <string name="btn_yes">Yes</string>
+    <string name="btn_set">Set</string>
     <string name="btn_cancel">Cancel</string>
 
     <string-array name="item_press_array">

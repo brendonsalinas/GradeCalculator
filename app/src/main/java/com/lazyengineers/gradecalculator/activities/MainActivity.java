@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton(R.string.year_btn_set, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.btn_set, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String text = input.getText().toString();
@@ -195,7 +195,7 @@ public class MainActivity extends Activity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton(R.string.year_btn_cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

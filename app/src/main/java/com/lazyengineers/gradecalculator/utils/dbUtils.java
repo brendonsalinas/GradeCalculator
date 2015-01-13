@@ -2,7 +2,7 @@ package com.lazyengineers.gradecalculator.utils;
 
 import android.content.Context;
 
-import com.lazyengineers.gradecalculator.storage.yearStorage;
+import com.lazyengineers.gradecalculator.storage.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,7 +34,12 @@ public class dbUtils {
             instance = (ArrayList<yearStorage>) is.readObject();
             is.close();
         } catch (Exception e) {
+            // handle app first boot when file is not yet created
+            // create new data instance
             instance = new ArrayList<yearStorage>();
+            // create initial entries.
+            instance.add(new yearStorage("Fall 2014"));
+            instance.get(0).getCourseList().add(new courseStorage("Writing 39C", 4, "A"));
         }
         return instance;
     }

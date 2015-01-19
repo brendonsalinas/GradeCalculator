@@ -27,6 +27,7 @@ import com.lazyengineers.gradecalculator.storage.*;
 import com.lazyengineers.gradecalculator.utils.dbUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CourseActivity extends Activity {
 
@@ -177,6 +178,9 @@ public class CourseActivity extends Activity {
 
         // setup courseLabel
         final EditText courseLabel = (EditText) dialogLayout.findViewById(R.id.course_label_input);
+        // if entry already exists, and mode is edit, populate input with this for user to modify
+        if (!append)
+            courseLabel.setText(coursesList.get(pos).getLabel());
 
         // setup gradesPicker
         final NumberPicker gradePicker = (NumberPicker) dialogLayout.findViewById(R.id.course_grade_picker);
@@ -184,6 +188,9 @@ public class CourseActivity extends Activity {
         final String grades[] = new String[] { "A+","A","A-","B+","B","B-","C+","C","C-","D+","D","D-","F" };
         gradePicker.setMinValue(0);
         gradePicker.setMaxValue(grades.length-1);
+        // if entry already exists, and mode is edit, populate input with this for user to modify
+        if (!append)
+            gradePicker.setValue(Arrays.asList(grades).indexOf(coursesList.get(pos).getGrade()));
         gradePicker.setWrapSelectorWheel(false);
         gradePicker.setDisplayedValues(grades);
 
@@ -191,6 +198,9 @@ public class CourseActivity extends Activity {
         final NumberPicker unitsPicker = (NumberPicker) dialogLayout.findViewById(R.id.course_units_picker);
         unitsPicker.setMinValue(0);
         unitsPicker.setMaxValue(8);
+        // if entry already exists, and mode is edit, populate input with this for user to modify
+        if (!append)
+            unitsPicker.setValue(coursesList.get(pos).getUnits());
         unitsPicker.setWrapSelectorWheel(false);
 
         // Inflate view (perhaps do the same for all other dialogBoxes
@@ -221,6 +231,7 @@ public class CourseActivity extends Activity {
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        if (append)
         ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
                 .setEnabled(false);
 

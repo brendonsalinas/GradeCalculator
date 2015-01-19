@@ -177,6 +177,9 @@ public class MainActivity extends Activity {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint(R.string.year_label_hint);
+        // if entry already exists, and mode is edit, populate input with this for user to modify
+        if (!append)
+            input.setText(yearsList.get(position).getLabel());
         builder.setView(input);
 
         // Set up the buttons
@@ -202,7 +205,8 @@ public class MainActivity extends Activity {
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
-        ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+        if (append)
+            ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
                 .setEnabled(false);
 
         // Now set the textchange listener for edittext

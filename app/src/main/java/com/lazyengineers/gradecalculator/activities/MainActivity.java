@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -72,9 +73,8 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             // make position accessible for inner classes
-            final int pos = position;
             yearStorage year = getItem(position);
 
             if (convertView == null) {
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
             yearLabel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemPressDialog(pos, view);
+                    onItemPressDialog(position, view);
                 }
             });
 
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
                     // put position in intent extras
                     // spawn new activity)
                     Intent courseIntent = new Intent(MainActivity.this, CourseActivity.class);
-                    courseIntent.putExtra("pos",pos);
+                    courseIntent.putExtra("pos",position);
                     MainActivity.this.startActivity(courseIntent);
                 }
             });
@@ -143,8 +143,6 @@ public class MainActivity extends Activity {
                 // same as action_add_icon.
                 setYearLabelDialog(0, true);
                 return true;
-            default:
-                System.out.println("Default case reached.");
         }
         return false;
     }
@@ -166,13 +164,11 @@ public class MainActivity extends Activity {
     }
 
     private void clearEntries() {
-        yearsList = new ArrayList<yearStorage>();
+        yearsList.clear();
         adapter.notifyDataSetChanged();
     }
 
-    private void setYearLabelDialog(int pos, boolean mode) {
-        final boolean append = mode;
-        final int parentPos = pos;
+    private void setYearLabelDialog(final int position, final boolean append) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.year_label_title);
 
@@ -191,7 +187,7 @@ public class MainActivity extends Activity {
                 if (append)
                     addYear(text);
                 else
-                    setYearLabel(parentPos, text);
+                    setYearLabel(position, text);
                 dialog.dismiss();
             }
         });
@@ -244,7 +240,7 @@ public class MainActivity extends Activity {
         final int parentPos = pos;
         AlertDialog.Builder chooser = new AlertDialog.Builder(this);
 
-        chooser.setTitle(R.string.year_menu_title);
+        chooser.setTitle(R.string.menu_title);
 
         // set dialog message
         chooser

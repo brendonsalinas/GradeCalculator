@@ -1,6 +1,8 @@
 package com.lazyengineers.gradecalculator.storage;
 
-public class courseStorage {
+import java.io.Serializable;
+
+public class courseStorage implements Serializable {
     private int units;
     private String grade, label;
 

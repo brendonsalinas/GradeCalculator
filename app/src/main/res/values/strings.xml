@@ -22,9 +22,12 @@
     <string name="btn_yes">Yes</string>
     <string name="btn_set">Set</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_next">Next</string>
+
+    <string name="menu_title">Choose an Action</string>
 
     <string-array name="item_press_array">
-        <item>Rename</item>
+        <item>Edit</item>
         <item>Delete</item>
     </string-array>
 

@@ -2,7 +2,6 @@
 <resources>
     <string name="year_label_title">Enter a Label</string>
     <string name="year_label_hint">Ex: Fall 2014</string>
-    <string name="year_menu_title">Choose an Action</string>
 
     <string name="year_confirmation_title">Delete All Data?</string>
     <string name="year_confirmation_msg">This will delete all saved years, courses, and grades.</string>

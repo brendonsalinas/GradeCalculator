@@ -6,13 +6,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lazyengineers.gradecalculator.R;
 import com.lazyengineers.gradecalculator.storage.*;
@@ -78,16 +86,34 @@ public class CourseActivity extends Activity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             // make position accessible for inner classes
-            final int pos = position;
             courseStorage course = getItem(position);
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.courses_layout, parent, false);
             }
 
-            // TODO: stub: add items here
+            // Lookup view for data population
+
+            // populate label
+            TextView courseLabel  = (TextView) convertView.findViewById(R.id.course_label);
+            courseLabel.setText(course.getLabel());
+
+            // populate grade
+            TextView courseGrade = (TextView) convertView.findViewById(R.id.course_grade);
+            courseGrade.setText(course.getGrade());
+
+            // populate units
+            TextView courseUnits = (TextView) convertView.findViewById(R.id.course_units);
+            courseUnits.setText(Integer.toString(course.getUnits()));
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemPressDialog(position, view);
+                }
+            });
 
             // Return the completed view to render on screen
             return convertView;
@@ -117,15 +143,143 @@ public class CourseActivity extends Activity {
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.action_add_icon:
-                //setYearLabelDialog(0, true);
+                setCourseInfoDialog(0, true);
                 return true;
             case R.id.action_add_text:
                 // same as action_add_icon.
+                setCourseInfoDialog(0, true);
                 return true;
-            default:
-                System.out.println("Default case reached.");
+            case android.R.id.home:
+                dbUtils.save(yearsList, CourseActivity.this);
+                finish();
+                return true;
         }
         return false;
+    }
+
+    /* -- Helper Methods -- */
+    private void removeCourse(int position, View view) {
+        coursesList.remove(position);
+        view.setAlpha(1);
+        adapter.notifyDataSetChanged();
+    }
+
+    /* -- Dialog Boxes -- */
+    private void setCourseInfoDialog(final int pos, final boolean append) {
+        // should get LABEL, grade, units.
+        AlertDialog.Builder builder = new AlertDialog.Builder(CourseActivity.this);
+        builder.setTitle(R.string.course_input_title);
+
+        // Set up the input
+        LayoutInflater inflater = CourseActivity.this.getLayoutInflater();
+
+        final View dialogLayout = inflater.inflate(R.layout.dialog_courseinput, null);
+
+        // setup courseLabel
+        final EditText courseLabel = (EditText) dialogLayout.findViewById(R.id.course_label_input);
+
+        // setup gradesPicker
+        final NumberPicker gradePicker = (NumberPicker) dialogLayout.findViewById(R.id.course_grade_picker);
+        // export this to resource?
+        final String grades[] = new String[] { "A+","A","A-","B+","B","B-","C+","C","C-","D+","D","D-","F" };
+        gradePicker.setMinValue(0);
+        gradePicker.setMaxValue(grades.length-1);
+        gradePicker.setWrapSelectorWheel(false);
+        gradePicker.setDisplayedValues(grades);
+
+        // setup unitsPicker
+        final NumberPicker unitsPicker = (NumberPicker) dialogLayout.findViewById(R.id.course_units_picker);
+        unitsPicker.setMinValue(0);
+        unitsPicker.setMaxValue(8);
+        unitsPicker.setWrapSelectorWheel(false);
+
+        // Inflate view (perhaps do the same for all other dialogBoxes
+        builder.setView(dialogLayout);
+
+        builder.setPositiveButton(R.string.btn_set, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = courseLabel.getText().toString();
+                String grade = grades[gradePicker.getValue()];
+                int units = unitsPicker.getValue();
+                if (append) {
+                    addCourse(text, units, grade);
+                } else {
+                    modifyCourseInfo(pos, text, units, grade);
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setEnabled(false);
+
+        // Now set the textchange listener for edittext
+        courseLabel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Check if edittext is empty
+                if (TextUtils.isEmpty(s)) {
+                    // Disable ok button
+                    ((AlertDialog) dialog).getButton(
+                            AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                } else {
+                    // Something into edit text. Enable the button.
+                    ((AlertDialog) dialog).getButton(
+                            AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                }
+
+            }
+        });
+    }
+
+    // todo: generic dialog builder
+    private void onItemPressDialog(final int pos, final View view) {
+        AlertDialog.Builder chooser = new AlertDialog.Builder(this);
+
+        chooser.setTitle(R.string.menu_title);
+
+        // set dialog message
+        chooser
+                .setCancelable(true)
+                .setItems(R.array.item_press_array, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int position) {
+                        // position = index of item clicked
+                        if (position == 0) {
+                            setCourseInfoDialog(pos, false);
+                        } else if (position == 1) {
+                            removeCourse(pos, view);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog dialog = chooser.create();
+        dialog.setCanceledOnTouchOutside(true);
+
+        // show it
+        dialog.show();
     }
 
     private void confirmationDialog() {
@@ -160,8 +314,18 @@ public class CourseActivity extends Activity {
         alertDialog.show();
     }
 
+    private void addCourse(String label, int units, String grades) {
+        coursesList.add( new courseStorage(label,units,grades));
+        adapter.notifyDataSetChanged();
+    }
+
+    private void modifyCourseInfo(int pos, String label, int units, String grades) {
+        coursesList.get(pos).setInfo(label,units,grades);
+        adapter.notifyDataSetChanged();
+    }
+
     private void clearEntries() {
-        coursesList = new ArrayList<courseStorage>();
+        coursesList.clear();
         adapter.notifyDataSetChanged();
     }
 
@@ -175,6 +339,12 @@ public class CourseActivity extends Activity {
     protected void onResume() {
         loadCourse();
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        dbUtils.save(yearsList, this);
+        super.onBackPressed();
     }
 
     @Override

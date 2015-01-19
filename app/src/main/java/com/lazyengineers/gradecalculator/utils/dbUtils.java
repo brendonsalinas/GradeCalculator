@@ -28,6 +28,7 @@ public class dbUtils {
 
     public static ArrayList<yearStorage> read(Context context) {
         ArrayList<yearStorage> instance;
+
         try {
             FileInputStream fis = context.openFileInput(fileName);
             ObjectInputStream is = new ObjectInputStream(fis);

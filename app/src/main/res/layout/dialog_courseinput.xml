@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:gravity="center"
+        android:textSize="24dp"
+        android:text="@string/course_label_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/course_label_input"
+        android:gravity="center"
+        android:maxLength="15"
+        android:hint="@string/course_label_hint"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!-- IM SORRY -->
+        <!-- grades (left view) -->
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:gravity="center"
+                android:text="@string/course_grade_title"
+                android:textSize="24dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Grades picker -->
+            <NumberPicker
+                android:id="@+id/course_grade_picker"
+                android:gravity="center"
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:descendantFocusability="blocksDescendants" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:gravity="center"
+                android:text="@string/course_units_title"
+                android:textSize="24dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Units picker -->
+            <NumberPicker
+                android:id="@+id/course_units_picker"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

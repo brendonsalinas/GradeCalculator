@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lazyengineers.gradecalculator" >
 
-    <uses-sdk android:minSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="11" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +25,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.CourseActivity"
+            android:label="@string/title_activity_course"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lazyengineers.gradecalculator.activities.MainActivity" />
         </activity>
     </application>
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="course_label_title">Label</string>
+    <string name="course_label_hint">Ex: Writing 39C</string>
+    <string name="course_units_title">Units</string>
+    <string name="course_grade_title">Grade</string>
+    <string name="course_input_title">Edit Course Info</string>
+
+    <string name="course_confirmation_title">Delete Courses?</string>
+    <string name="course_confirmation_msg">This will delete all saved courses for current year.</string>
+</resources>
